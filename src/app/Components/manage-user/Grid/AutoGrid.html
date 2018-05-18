@@ -1,0 +1,82 @@
+<div> 
+          <!--Table-->
+        <table class="table table-striped table-bordered">
+
+            <!--Table head-->
+            <thead class="blue-grey lighten-4">
+                <tr class="bg-info">
+
+                    <th *ngFor="let col of Columns" >
+                      <div (click)="Sort(col.colName, col.Direction, col)">{{col.colDisplayName}}  {{col.filterable}}
+                        <i aria-hidden="true" [ngClass]="col.Direction == undefined ? 'fa fa-sort' : (col.Direction==1 ? 'fa fa-sort-asc' : 'fa fa-sort-desc')"></i> 
+                      </div>
+                      <span class="filter" (click)="OnSearchClick($event, col.colName)" *ngIf="col.filterable"><i class="fa fa-filter" aria-hidden="true"></i></span> 
+                    </th>
+                    <!--For the delete link-->
+                    <th></th>    
+                </tr>
+            </thead>
+            <!--Table head-->
+
+            <!--Table body-->
+            <tbody>      
+                <tr *ngFor="let c of (Data | AutoGridPipe : [SortBy,Direction]) | slice:(PageIndex*PageSize):(PageIndex*PageSize)+PageSize">
+                    <td *ngFor="let col of Columns">{{c[col.colName]}}</td>
+                  <!--show delete if enabled, and pass the whole row to OnDeleteRow-->
+                  <td><button class="btn btn-primary" style="cursor:pointer" (click)="OnUpdate(c)">Update</button></td>             
+                </tr>
+            </tbody>
+            <!--Table body-->
+        </table>
+        <!--Table-->
+      </div>
+      <div class="row">
+        <div class="col-sm-5">
+          <div id="example_info" role="status" aria-live="polite">Showing {{(PageIndex*PageSize)+1}} to {{(PageIndex*PageSize)+PageSize}} of {{TotalRows}} entries</div>
+        </div>
+        <div class="col-sm-7" >
+          <nav aria-label="Page navigation example nav">
+            <ul class="pagination">
+              <!--<li class="page-item" *ngFor="let pageIndex of Pages;let i = index;">
+                <a class="page-link" (click)="OnPageIndexChange(pageIndex)">1 </a>
+              </li>-->
+                  <!--If this is the current page, page number displayed as a text only-->
+                  
+                  <!--Page number dispalyed as a link, which call OnPageIndexChange and pass the new PageIndex + 1 -->
+              <span *ngFor="let pageIndex of Pages;let i = index;">
+                <li class="page-item">
+                <a class="page-link" style="cursor:pointer" (click)="OnPageIndexChange(pageIndex)">{{pageIndex}}</a>
+                </li>
+              </span>
+            </ul>
+          </nav>
+  </div>
+</div>
+
+<button (click)="showDialog = !showDialog" class="btn">Open</button>
+<app-grid-srch-filter [(visible)]="showDialog">
+  <div class="container srchContainer">
+    <div class="col-sm-12 pull-center well">
+        <form class="form-inline" action="#" method="POST">
+
+          <select class="form-control" [(ngModel)] = "SearchCriteria" name="srchCriteria">
+              <option>Contains</option>
+              <option>Equals</option>
+              <option>Starts With</option>
+              <option>Ends With</option>
+          </select>
+      
+          <div class="input-group custom-search-form">
+              <input type="text" class="form-control" placeholder="Search..." [(ngModel)] = "SearchText" name="srchText" />
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" (click)="OnFilterClick()">
+                        <i>search</i>
+                      </button>
+                  </span>
+          </div>
+        </form>
+    </div>
+  </div>
+</app-grid-srch-filter>
+
+

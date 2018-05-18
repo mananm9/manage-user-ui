@@ -1,0 +1,118 @@
+<fieldset class="fieldset" style="width:60%">
+   <legend style="width:40%">
+      <h2>Add User Form</h2>
+   </legend>
+   <div class="container">
+     <ngx-loading [show]="loadingimg" [config]="{ backdropBorderRadius: '14px',primaryColour: '#3498DB', secondaryColour: '#3498DB', tertiaryColour: '#3498DB'  }"></ngx-loading>
+
+      <div class="row" >
+         <div  class="form-group col-lg-6">
+            <label for="userId">Login Name</label> 
+            <input id="userId" name="userId" type="text" class="form-control" placeholder="Login Name" #userId="ngModel" minlength="3" maxlength="20" [(ngModel)]="userModel.login_nm" required/>        
+            <div [hidden]="userId.valid || userId.untouched"
+               class="alert alert-danger">
+               <div [hidden]="!userId.hasError('minlength')">Login Name should have atleast 3 characters</div>
+               <div [hidden]="!userId.hasError('required')">Login Name is required</div>
+               <div [hidden]="!userId.hasError('maxlength')">Maximun length is 20 characters</div>
+            </div>
+         </div>
+         <div class="form-group col-lg-6">
+            <label for="firstName">First Name</label>
+            <input id="firstName" name="firstName" #firstName="ngModel" type="text" class="form-control" placeholder="First Name" minlength="2" maxlength="10" [(ngModel)]="userModel.frst_nm"  pattern="[a-zA-Z]+" required>               
+            <div [hidden]="firstName.valid || firstName.untouched"
+               class="alert alert-danger">
+               <div [hidden]="!firstName.hasError('minlength')">First Name should have atleast 2 characters</div>
+               <div [hidden]="!firstName.hasError('required')">First Name is required</div>
+               <div [hidden]="!firstName.hasError('pattern')">Only alphabetsallowed</div>
+               <div [hidden]="!userId.hasError('maxlength')">Maximun length is 10 characters</div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="form-group col-lg-6">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last Name" #lastName="ngModel" minlength="2" maxlength="10" [(ngModel)]="userModel.lst_nm" pattern="[a-zA-Z]+" required/>        
+            <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
+               <div [hidden]="!lastName.hasError('minlength')">Last Name should have atleast 2 characters</div>
+               <div [hidden]="!lastName.hasError('required')">Last Name is required</div>
+               <div [hidden]="!lastName.hasError('pattern')">Only alphabetsallowed</div>
+               <div [hidden]="!userId.hasError('maxlength')">Maximun length is 10 characters</div>
+            </div>
+         </div>
+         <div class="form-group col-lg-6">
+            <label for="phoneNumber">Phone Number</label>
+            <input id="phoneNumber" name="phoneNumber" type="text" class="form-control" placeholder="Phone Number"  pattern="[0-9]*"
+            minlength="10" maxlength="10" #phoneNumber="ngModel" [(ngModel)]="userModel.phn_addr_txt" required/>        
+            <div [hidden]="phoneNumber.valid || phoneNumber.untouched"
+               class="alert alert-danger">
+               <div [hidden]="!phoneNumber.hasError('minlength')">Phone Number should be 10digit</div>
+               <div [hidden]="!phoneNumber.hasError('required')">Phone Number is required</div>
+               <div [hidden]="!phoneNumber.hasError('pattern')">Phone Number should have only numbers</div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="form-group col-lg-6">
+            <label for="usrsts">Status</label><br/>
+            <div class="btn-group" >
+               <label class="btn btn-primary active">
+               <input name="usrsts" type="radio"   [(ngModel)]='userModel.ebus_sts_cd' [value]=true>
+               <span class="custom-control-description">Active</span>
+               </label>
+               <label class="btn btn-primary">
+               <input name="usrsts" type="radio"  [(ngModel)]='userModel.ebus_sts_cd' [value]=false>
+               <span class="custom-control-description">In Active</span>
+               </label>          
+               <!--<input type="radio" name="usrsts" class="form-control" [(ngModel)]='usrmodel.usrsts' [value]=true>Active
+                  <input type="radio" name="usrsts" class="form-control" [(ngModel)]='usrmodel.usrsts' [value]=false>InActive -->         
+            </div>
+         </div>
+         <div class="form-group col-lg-6">
+            <label for="hasRole">Has Role</label>
+            <div class="form-control">
+               <label class="custom-control custom-radio">
+               <input name="hasRole" type="radio" class="custom-control-input" [(ngModel)]='userModel.hasrole' [value]=true>
+               <span class="custom-control-indicator"></span>
+               <span class="custom-control-description">Yes</span>
+               </label>
+               <label class="custom-control custom-radio">
+               <input name="hasRole" type="radio" class="custom-control-input" [(ngModel)]='userModel.hasrole' [value]=false>
+               <span class="custom-control-indicator"></span>
+               <span class="custom-control-description">No</span>
+               </label>          
+               <!--<input type="radio" name="usrsts" class="form-control" [(ngModel)]='usrmodel.usrsts' [value]=true>Active
+                  <input type="radio" name="usrsts" class="form-control" [(ngModel)]='usrmodel.usrsts' [value]=false>InActive -->         
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="form-group col-lg-6">
+            <label for="createdDate">Create Date</label>
+            <div id="createdDate" class="form-control">
+               <ng2-datepicker [options]="options"></ng2-datepicker>
+            </div>
+         </div>
+         <div class="form-group col-lg-6">
+            <label for="email">Email</label>
+            <input id="email" name="email" #email="ngModel" type="text" class="form-control" placeholder="Email" [(ngModel)]="userModel.email_addr_txt" email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>        
+            <div class="alert alert-danger" [hidden]="email.valid || email.untouched">
+               <div  *ngIf="email.errors && email.errors.required">
+                  Email is required
+               </div>
+               <div  *ngIf="email.errors && email.errors.pattern">
+                  Email is invalid
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <button class='btn btn-primary col-lg-4' [disabled]="!userId.valid || !firstName.valid || !lastName.valid||!phoneNumber.valid||!email.valid"
+         (click)="addNewUser(userModel)">Add
+         <!--<button class='btn btn-primary col-lg-4' (click)="addNewUser(userModel) ;reload();">Add-->
+         <!--<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> --> 
+         </button> 
+      </div>
+   </div>
+   <br/>
+</fieldset>
+<br/>

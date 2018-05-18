@@ -1,0 +1,50 @@
+<fieldset class="fieldset" style="width:60%">
+   <legend style="width:35%">
+      <h2>Search Users</h2>
+   </legend>
+   <div class="container">
+        <ngx-loading [show]="loadingimg" [config]="{ backdropBorderRadius: '14px',primaryColour: '#3498DB', secondaryColour: '#3498DB', tertiaryColour: '#3498DB'  }"></ngx-loading>
+      <div class="row" >
+         <div  class="form-group col-lg-6">
+            <label for="userId">Login Name</label> 
+            <input id="userId" name="userId" type="text" class="form-control" #userId="ngModel"  maxlength="20" placeholder="Login Name" [(ngModel)]="userModel.login_nm"/>        
+            <div [hidden]="userId.valid || userId.untouched"
+               class="alert alert-danger">
+               <div [hidden]="!userId.hasError('maxlength')">Maximun length is 20 characters</div>
+            </div>
+         </div>
+         <div class="form-group col-lg-6">
+            <label for="firstName">First Name</label>
+            <input id="firstName" name="firstName" type="text" class="form-control" placeholder="First Name" #firstName="ngModel" minlength="2" maxlength="10" [(ngModel)]="userModel.frst_nm" pattern="[a-zA-Z]+"/>        
+            <div [hidden]="firstName.valid || firstName.untouched"
+               class="alert alert-danger">
+               <div [hidden]="!firstName.hasError('minlength')">First Name should have atleast 2 characters</div>
+               <div [hidden]="!firstName.hasError('pattern')">Only alphabetsallowed</div>
+               <div [hidden]="!userId.hasError('maxlength')">Maximun length is 10 characters</div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="form-group col-lg-6">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last Name" #lastName="ngModel" minlength="2" maxlength="10" [(ngModel)]="userModel.lst_nm" pattern="[a-zA-Z]+"/>        
+            <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
+               <div [hidden]="!lastName.hasError('minlength')">Last Name should have atleast 2 characters</div>
+               <div [hidden]="!lastName.hasError('pattern')">Only alphabetsallowed</div>
+               <div [hidden]="!userId.hasError('maxlength')">Maximun length is 10 characters</div>
+            </div>
+         </div>
+         <div class="form-group col-lg-6">
+            <label for="status">Status</label><br/>
+            <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="optionsModel" name="status" ></ss-multiselect-dropdown>
+         </div>
+      </div>
+      <div class="row">      
+         <button class='btn btn-primary btn-sm col-lg-4' (click)="performSearch(userModel)">
+         Search<i class="fa fa-search icon-right" aria-hidden="true"></i>
+         </button> 
+      </div>
+   </div>
+   <br/>
+</fieldset>
+<br/>

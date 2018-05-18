@@ -1,0 +1,11 @@
+<h1 align="center">LOGIN TO THE SITE TO CONTINUE
+</h1>
+<p>
+  <label for="userId">Login Id</label>
+  <input id="userId" name="userId" type="text" class="form-control" [(ngModel)]="userModel.frst_nm"/>
+  <label for="password">Password</label>
+  <input id="password" name="password" type="text" class="form-control" [(ngModel)]="userModel.lst_nm"/>
+  </p>
+<button (click)="LoginUser(userModel)">LOGIN</button>
+<br />
+<h6 align="center">{{message}}</h6>
